@@ -14,12 +14,11 @@
     pkg = pkgs.open-webui;
     imageConfig = {
       ExposedPorts = {
-        
+        "8080/tcp" = {};
       };
       Volumes = {
-        
+        "/app/backend/data" = {};
       };
-      
       Cmd = [ "${pkg}/bin/open-webui" ];
     };
   in {
