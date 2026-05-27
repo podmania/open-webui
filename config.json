@@ -1,11 +1,6 @@
 {
   "name": "open-webui",
   "upstream": "open-webui/open-webui",
-  "apiUrl": "https://api.github.com",
-  "tagPrefix": "v",
-  "fetcher": "fetchurl",
-  "fetchUrl": "https://github.com/open-webui/open-webui/archive/refs/tags/v{VERSION}.tar.gz",
-  "versionOutput": "open-webuiVersion",
   "images": [
     {
       "name": "open-webui",

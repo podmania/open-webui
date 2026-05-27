@@ -17,19 +17,17 @@ jobs:
   config:
     runs-on: ubuntu-latest
     outputs:
-      version-output: ${{ steps.read.outputs.version-output }}
       images: ${{ steps.read.outputs.images }}
     steps:
       - uses: actions/checkout@v6
       - id: read
         run: |
-          echo "version-output=$(jq -r '.versionOutput' config.json)" >> "$GITHUB_OUTPUT"
           echo "images=$(jq -c '.images' config.json)" >> "$GITHUB_OUTPUT"
 
   build:
     needs: config
     uses: podmania/actions/.github/workflows/build-publish.yml@main
     with:
-      version-output: ${{ needs.config.outputs.version-output }}
+      version-output: version
       images: ${{ needs.config.outputs.images }}
       force_rebuild: ${{ github.event.inputs.force_rebuild == 'true' }}

@@ -11,15 +11,7 @@
     system = builtins.currentSystem;
     pkgs = nixpkgs.legacyPackages.${system};
     n2c = nix2container.outputs.packages.${system}.nix2container;
-    version = "0.0.0";
-    srcHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-    pkg = pkgs.open-webui.overrideAttrs (old: {
-      inherit version;
-      src = pkgs.fetchurl {
-        url = "https://github.com/open-webui/open-webui/archive/refs/tags/v{VERSION}.tar.gz";
-        hash = srcHash;
-      };
-    });
+    pkg = pkgs.open-webui;
     imageConfig = {
       ExposedPorts = {
         
@@ -53,6 +45,6 @@
       default = self.packages.${system}.open-webui-image;
     };
 
-    open-webuiVersion = version;
+    version = pkg.version;
   };
 }
