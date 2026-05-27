@@ -1,5 +1,5 @@
 {
-  description = "<%= name.capitalize() %> distroless image using nix2container";
+  description = "Open-webui distroless image using nix2container";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -13,56 +13,46 @@
     n2c = nix2container.outputs.packages.${system}.nix2container;
     version = "0.0.0";
     srcHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-    pkg = pkgs.<%= name %>.overrideAttrs (old: {
+    pkg = pkgs.open-webui.overrideAttrs (old: {
       inherit version;
-      src = pkgs.<%= fetcher %> {
-        url = "<%= fetch_url %>";
+      src = pkgs.fetchurl {
+        url = "https://github.com/open-webui/open-webui/archive/refs/tags/v{VERSION}.tar.gz";
         hash = srcHash;
       };
     });
     imageConfig = {
       ExposedPorts = {
-        <% for port in ports %>
-        "<%= port %>/tcp" = {};
-        <% endfor %>
+        
       };
       Volumes = {
-        <% for volume in volumes %>
-        "<%= volume %>" = {};
-        <% endfor %>
+        
       };
-      <% if env %>
-      Env = [
-        <% for e in env %>
-        "<%= e %>"
-        <% endfor %>
-      ];
-      <% endif %>
-      Cmd = [ "${pkg}/bin/<%= main_program or name %>"<% for arg in cmd_args %> "<%= arg %>"<% endfor %> ];
+      
+      Cmd = [ "${pkg}/bin/open-webui" ];
     };
   in {
     packages.${system} = {
-      <%= name %>-image = n2c.buildImage {
-        name = "<%= name %>";
+      open-webui-image = n2c.buildImage {
+        name = "open-webui";
         tag = "latest";
         fromImage = base.packages.${system}.base-image;
         maxLayers = 5;
         config = imageConfig;
       };
 
-      <%= name %>-debug-image = n2c.buildImage {
-        name = "<%= name %>";
+      open-webui-debug-image = n2c.buildImage {
+        name = "open-webui";
         tag = "latest-debug";
         fromImage = base.packages.${system}.base-debug-image;
         maxLayers = 5;
         config = imageConfig;
       };
 
-      <%= name %> = pkg;
+      open-webui = pkg;
 
-      default = self.packages.${system}.<%= name %>-image;
+      default = self.packages.${system}.open-webui-image;
     };
 
-    <%= name %>Version = version;
+    open-webuiVersion = version;
   };
 }
