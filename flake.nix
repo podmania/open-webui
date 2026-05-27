@@ -19,7 +19,10 @@
       Volumes = {
         "/app/backend/data" = {};
       };
-      Cmd = [ "${pkg}/bin/open-webui" ];
+      Env = [
+        "ENABLE_OLLAMA_API=False"
+      ];
+      Cmd = [ "${pkg}/bin/open-webui" "serve" ];
     };
   in {
     packages.${system} = {
