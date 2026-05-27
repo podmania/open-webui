@@ -4,8 +4,8 @@ services:
     userns_mode: "keep-id"
     container_name: open-webui
     ports:
-      
+      - 3200:8080
     volumes:
-      
+      - ./data:/app/backend/data
       - /etc/localtime:/etc/localtime:ro
     restart: always
