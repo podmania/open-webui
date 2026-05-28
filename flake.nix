@@ -20,7 +20,10 @@
         "/app/backend/data" = {};
       };
       Env = [
-        "ENABLE_OLLAMA_API=False"
+          "ENABLE_OLLAMA_API=False"
+          "DATA_DIR=/app/backend/data"
+          "HF_HOME=/app/backend/data/huggingface"
+          "STATIC_DIR=/app/backend/data/static"
       ];
       Cmd = [ "${pkg}/bin/open-webui" "serve" ];
     };
@@ -31,6 +34,7 @@
         tag = "latest";
         fromImage = base.packages.${system}.base-image;
         maxLayers = 5;
+        copyToRoot = [ pkgs.ffmpeg-headless ];
         config = imageConfig;
       };
 
@@ -39,6 +43,7 @@
         tag = "latest-debug";
         fromImage = base.packages.${system}.base-debug-image;
         maxLayers = 5;
+        copyToRoot = [ pkgs.ffmpeg-headless ];
         config = imageConfig;
       };
 
