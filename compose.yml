@@ -3,6 +3,8 @@ services:
     image: ghcr.io/podmania/open-webui:latest
     userns_mode: "keep-id"
     container_name: open-webui
+    environment:
+      - WEBUI_SECRET_KEY="password"
     ports:
       - 3200:8080
     volumes:
