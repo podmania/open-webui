@@ -5,6 +5,9 @@ permissions:
   packages: write
 
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
     inputs:
       force_rebuild:
